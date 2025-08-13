@@ -1,0 +1,408 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: white;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+header h1 {
+    font-size: 2.5em;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.score {
+    font-size: 1.2em;
+    background: rgba(255,255,255,0.1);
+    padding: 10px 20px;
+    border-radius: 25px;
+    display: inline-block;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loading {
+    text-align: center;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(255,255,255,0.3);
+    border-top: 5px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.game-area {
+    width: 100%;
+    max-width: 600px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 30px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+}
+
+.game-section {
+    margin-bottom: 20px;
+}
+
+.audio-section {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.music-icon {
+    font-size: 80px;
+    margin-bottom: 20px;
+    opacity: 0.8;
+    display: none; /* 隱藏音樂圖示，因為下方已有專輯封面 */
+}
+
+.instruction {
+    margin-top: 15px;
+    color: rgba(255,255,255,0.9);
+    font-size: 16px;
+}
+
+.reveal-section {
+    margin-top: 30px;
+    padding: 20px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 15px;
+    border: 2px solid rgba(255,255,255,0.1);
+    animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.album-cover-large {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.album-cover-large img {
+    width: 200px;
+    height: 200px;
+    border-radius: 15px;
+    object-fit: cover;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%);
+}
+
+.album-cover-large:hover img {
+    transform: scale(1.05);
+}
+
+.genre-info {
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #4CAF50;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.song-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    gap: 20px;
+}
+
+/* 為新的 song-info 結構更新樣式 */
+.reveal-section .song-info {
+    display: block;
+    text-align: center;
+}
+
+.song-details {
+    margin-top: 15px;
+}
+
+.song-details h2, .song-details h3 {
+    margin: 8px 0;
+    color: white;
+}
+
+.song-details h2 {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.song-details h3 {
+    font-size: 20px;
+    font-weight: normal;
+    opacity: 0.9;
+}
+
+.genre-info {
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #4CAF50;
+}
+
+/* 保持原有的樣式不變 */
+.album-cover {
+    flex-shrink: 0;
+    position: relative;
+}
+
+.album-cover img {
+    width: 120px;
+    height: 120px;
+    border-radius: 15px;
+    object-fit: cover;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.play-button-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.album-cover:hover .play-button-overlay {
+    opacity: 1;
+}
+
+.play-btn {
+    background: rgba(255,255,255,0.9);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    transition: all 0.2s ease;
+}
+
+.play-btn:hover {
+    transform: scale(1.1);
+    background: rgba(255,255,255,1);
+}
+
+.audio-controls {
+    margin: 15px 0;
+}
+
+.audio-controls audio {
+    width: 100%;
+    max-width: 300px;
+}
+
+.song-details h2 {
+    font-size: 1.5em;
+    margin-bottom: 8px;
+    color: #fff;
+}
+
+.song-details h3 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    color: #ddd;
+    opacity: 0.9;
+}
+
+.song-details p {
+    font-size: 1.1em;
+    opacity: 0.9;
+    line-height: 1.5;
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.option-btn {
+    background: rgba(255,255,255,0.15);
+    border: 2px solid transparent;
+    padding: 15px 25px;
+    border-radius: 10px;
+    color: white;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.option-btn:hover {
+    background: rgba(255,255,255,0.25);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.option-btn.selected {
+    border-color: #fff;
+    background: rgba(255,255,255,0.3);
+}
+
+.option-btn.correct {
+    background: rgba(76, 175, 80, 0.8);
+    border-color: #4CAF50;
+}
+
+.option-btn.incorrect {
+    background: rgba(244, 67, 54, 0.8);
+    border-color: #F44336;
+}
+
+.controls {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.next-btn {
+    background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    color: white;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.next-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+
+.next-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.result {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.result-content {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 400px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+.result-content h3 {
+    font-size: 2em;
+    margin-bottom: 15px;
+}
+
+.result-content p {
+    font-size: 1.2em;
+    line-height: 1.5;
+}
+
+footer {
+    text-align: center;
+    margin-top: 30px;
+    opacity: 0.7;
+}
+
+footer a {
+    color: #fff;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
+    header h1 {
+        font-size: 2em;
+    }
+    
+    .song-info {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .album-cover img {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .game-area {
+        padding: 20px;
+    }
+    
+    .result-content {
+        margin: 20px;
+        padding: 30px;
+    }
+}

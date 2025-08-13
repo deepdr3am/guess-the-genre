@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>猜音樂類型遊戲</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* 載入狀態的額外樣式 */
+        .loading-status {
+            margin-top: 20px;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .loading-message {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .loading-progress {
+            font-size: 14px;
+            color: #666;
+            opacity: 0.8;
+        }
+        
+        .ready-btn {
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .ready-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+        
+        .quick-loader {
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .notification {
+            animation: slideDown 0.3s ease;
+            transition: all 0.3s ease;
+        }
+        
+        @keyframes slideDown {
+            from {
+                transform: translateX(-50%) translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(-50%) translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        /* 提升載入體驗 */
+        .loading {
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255,255,255,0.3);
+            border-top: 5px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* 成功狀態指示器 */
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .status-ready { background: #4CAF50; }
+        .status-loading { background: #FF9800; animation: pulse 1s infinite; }
+        .status-error { background: #f44336; }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎵 猜音樂類型遊戲</h1>
+            <div class="score">得分: <span id="score">0</span></div>
+        </header>
+
+        <main>
+            <div id="loading" class="loading">
+                <div class="spinner"></div>
+                <div id="loading-status" class="loading-status">
+                    <div class="loading-message">正在初始化音樂服務...</div>
+                    <div class="loading-progress">首次載入需要幾秒鐘，之後會非常快速</div>
+                </div>
+            </div>
+
+            <div id="game-area" class="game-area hidden">
+                <!-- 初始遊戲區域：只顯示播放器和選項 -->
+                <div class="game-section">
+                    <div class="audio-section">
+                        <div class="album-cover">
+                            <div class="music-icon">🎵</div>
+                            <div class="play-button-overlay">
+                                <button id="play-btn" class="play-btn">▶️</button>
+                            </div>
+                        </div>
+                        <div class="audio-controls">
+                            <audio id="audio-player" controls preload="none">
+                                <source id="audio-source" src="" type="audio/mpeg">
+                                您的瀏覽器不支援音樂播放功能。
+                            </audio>
+                            <p class="instruction">🎵 聽完音樂片段後，請從下面三個選項中選擇正確的音樂類型：</p>
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <button class="option-btn" data-index="0"></button>
+                        <button class="option-btn" data-index="1"></button>
+                        <button class="option-btn" data-index="2"></button>
+                    </div>
+                </div>
+
+                <!-- 答案揭曉區域：選擇後才顯示 -->
+                <div id="reveal-section" class="reveal-section hidden">
+                    <div class="song-info">
+                        <div class="album-cover-large">
+                            <img id="album-cover" src="" alt="Album Cover">
+                        </div>
+                        <div class="song-details">
+                            <h2>歌曲: <span id="song-name"></span></h2>
+                            <h3>藝人: <span id="artist-name"></span></h3>
+                            <p class="genre-info">正確類型: <span id="correct-genre"></span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="controls">
+                    <button id="next-btn" class="next-btn" disabled>下一題</button>
+                </div>
+
+                <div id="result" class="result hidden">
+                    <div class="result-content">
+                        <h3 id="result-title"></h3>
+                        <p id="result-message"></p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>
+                音樂資料來源：<a href="https://everynoiseatonce.com" target="_blank">Every Noise at Once</a>
+            </p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
