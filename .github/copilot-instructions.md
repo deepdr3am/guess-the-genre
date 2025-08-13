@@ -8,10 +8,10 @@
 - **後端**: Node.js + Express
 - **前端**: 純 HTML/CSS/JavaScript
 - **爬蟲**: Puppeteer + Cheerio + Axios
-- **資料來源**: everynoiseatonce.com
+- **資料來源**: everynoise.com
 
 ## 主要功能
-1. 從 everynoiseatonce.com 爬取音樂類型和藝人資訊
+1. 從 everynoise.com 爬取音樂類型和藝人資訊
 2. 隨機生成音樂類型問題（三選一）
 3. 顯示藝人圖片和資訊
 4. 計分系統

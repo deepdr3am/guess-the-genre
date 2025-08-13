@@ -1,6 +1,6 @@
 # 🎵 猜音樂類型遊戲
 
-一個基於 Web 的音樂類型猜測遊戲，透過爬蟲技術從 [Every Noise at Once](https://everynoiseatonce.com) 獲取音樂類型和藝人資訊。
+一個基於 Web 的音樂類型猜測遊戲，透過爬蟲技術從 [Every Noise at Once](https://everynoise.com) 獲取音樂類型和藝人資訊。
 
 ## ✨ 功能特點
 
@@ -34,7 +34,7 @@ npm start
 - **後端**: Node.js + Express
 - **前端**: HTML5 + CSS3 + JavaScript (ES6+)
 - **爬蟲**: Puppeteer + Cheerio + Axios
-- **資料來源**: everynoiseatonce.com
+- **資料來源**: everynoise.com
 
 ## 📁 專案結構
 
@@ -82,4 +82,4 @@ ISC License
 
 ## 🙏 致謝
 
-感謝 [Every Noise at Once](https://everynoiseatonce.com) 提供豐富的音樂類型資料。
+感謝 [Every Noise at Once](https://everynoise.com) 提供豐富的音樂類型資料。

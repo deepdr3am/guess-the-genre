@@ -16,7 +16,7 @@
   ],
   "author": "",
   "license": "ISC",
-  "description": "A web application for guessing music genres with scraped data from everynoiseatonce.com",
+  "description": "A web application for guessing music genres with scraped data from everynoise.com",
   "dependencies": {
     "axios": "^1.11.0",
     "cheerio": "^1.1.2",
